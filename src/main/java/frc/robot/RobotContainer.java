@@ -37,7 +37,7 @@ public class RobotContainer
 
   private void configureButtonBindings() 
   {
-    
+    new JoystickButton(controller, XboxController.Button.kA.value).whenPressed(() -> driveSystem.kill());
   }
 
   public Command getAutonomousCommand()
