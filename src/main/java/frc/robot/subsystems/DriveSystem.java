@@ -36,4 +36,12 @@ public class DriveSystem extends SubsystemBase
     rightMotor1.set(ControlMode.PercentOutput, right);
     rightMotor2.set(ControlMode.PercentOutput, right);
   }
+
+  public void kill()
+  {
+    leftMotor1.set(ControlMode.PercentOutput, 0);
+    leftMotor2.set(ControlMode.PercentOutput, 0);
+    rightMotor1.set(ControlMode.PercentOutput, 0);
+    rightMotor2.set(ControlMode.PercentOutput, 0);
+  }
 }
