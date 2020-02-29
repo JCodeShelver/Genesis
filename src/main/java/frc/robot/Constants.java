@@ -17,4 +17,9 @@ public final class Constants
 
     public static final int LT_ENCODER_CAN_ID    = 5;
     public static final int RT_ENCODER_CAN_ID    = 6;
+
+    public static final double GYRO_PID_P = 0.01;
+    public static final double GYRO_PID_I = 0.0;
+    public static final double GYRO_PID_D = 0.0;
+    public static final double GYRO_PID_TOLERANCE = 2.0;
 }
