@@ -5,14 +5,14 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 
-import frc.robot.commands.DriveHuman;
 import frc.robot.commands.Auton;
+import frc.robot.commands.DriveHuman;
+import frc.robot.commands.Stop;
 
 import frc.robot.subsystems.DriveSystem;
 
@@ -23,27 +23,25 @@ public class RobotContainer
   XboxController controller = new XboxController(Constants.CONTROLLER_USB_PORT);
 
   private final DriveSystem driveSystem = new DriveSystem();
-
   
   public RobotContainer()
   {
+    configureButtonBindings();
+
     driveSystem.setDefaultCommand(new DriveHuman(
       driveSystem,
       () -> leftStick.getY(),
       () -> rightStick.getY()));
-
-    configureButtonBindings();
   }
 
   private void configureButtonBindings() 
   {
-    
+    new JoystickButton(controller, XboxController.Button.kA.value).whileHeld(new Stop(driveSystem));
   }
 
   public Command getAutonomousCommand()
   {
-    Command autonCommandChoice;
-    autonCommandChoice = new Auton();
+    Command autonCommandChoice = new Auton(driveSystem);
     return autonCommandChoice;
   }
 }

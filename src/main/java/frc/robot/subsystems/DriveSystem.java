@@ -17,6 +17,8 @@ public class DriveSystem extends SubsystemBase
   private TalonSRX leftMotor1, leftMotor2;
   private TalonSRX rightMotor1, rightMotor2;
   private Counter leftEncoder, rightEncoder;
+
+  private double adjustedLeft, adjustedRight;
   
   public DriveSystem()
   {
@@ -27,14 +29,29 @@ public class DriveSystem extends SubsystemBase
 
     leftEncoder = new Counter(Constants.LT_ENCODER_CAN_ID);
     rightEncoder = new Counter(Constants.RT_ENCODER_CAN_ID);
+
+    leftMotor1.setInverted(true);
+    leftMotor2.setInverted(true);
+    rightMotor1.setInverted(false);
+    rightMotor2.setInverted(false);
   }
 
-  public void drive(double left, double right)
+  public void quadDrive(double left, double right)
   {
-    leftMotor1.set(ControlMode.PercentOutput, left);
-    leftMotor2.set(ControlMode.PercentOutput, left);
-    rightMotor1.set(ControlMode.PercentOutput, right);
-    rightMotor2.set(ControlMode.PercentOutput, right);
+    if (left < 0)
+      adjustedLeft = -left * left;
+    else
+      adjustedLeft = left * left;
+      
+    if (right < 0)
+      adjustedRight = -right * right;
+    else
+      adjustedRight = right * right;
+
+    leftMotor1.set(ControlMode.PercentOutput, adjustedLeft);
+    leftMotor2.set(ControlMode.PercentOutput, adjustedLeft);
+    rightMotor1.set(ControlMode.PercentOutput, adjustedRight);
+    rightMotor2.set(ControlMode.PercentOutput, adjustedRight);
   }
 
   public void kill()
@@ -43,5 +60,11 @@ public class DriveSystem extends SubsystemBase
     leftMotor2.set(ControlMode.PercentOutput, 0);
     rightMotor1.set(ControlMode.PercentOutput, 0);
     rightMotor2.set(ControlMode.PercentOutput, 0);
+  }
+
+  public void zeroEncoder()
+  {
+    leftEncoder.reset();
+    rightEncoder.reset();
   }
 }
