@@ -8,14 +8,17 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+// Import Subsystems
 import frc.robot.subsystems.DriveSystem;
 
 public class DriveHuman extends CommandBase 
 {
+  // Set vars
   private final DriveSystem driveSystem;
   private DoubleSupplier leftValue;
   private DoubleSupplier rightValue;
 
+  // Constructor
   public DriveHuman(DriveSystem d, DoubleSupplier left, DoubleSupplier right)
   {
     driveSystem = d;
@@ -24,6 +27,7 @@ public class DriveHuman extends CommandBase
     addRequirements(driveSystem);
   }
 
+  // Passes user input into drive subsystem.
   @Override
   public void execute()
   {

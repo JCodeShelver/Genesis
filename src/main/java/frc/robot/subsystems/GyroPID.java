@@ -1,6 +1,6 @@
-// BlitzCreeek 3770 - Genesis Project
+// BlitzCreek 3770 - Genesis Project
 // GyroPID Subsystem
-// Controlls Gyroscope
+// Controls Gyroscope
 
 package frc.robot.subsystems;
 
@@ -9,14 +9,17 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 
+// Import Constants
 import frc.robot.Constants;
 
 public class GyroPID extends PIDSubsystem
 {
+	// Set vars
     private ADXRS450_Gyro gyro;
 
     private double pidOutput, currentSetpoint;
-
+	
+	// Constructor
     public GyroPID()
     {
         super(new PIDController(Constants.GYRO_PID_P, Constants.GYRO_PID_I, Constants.GYRO_PID_D));
@@ -25,7 +28,7 @@ public class GyroPID extends PIDSubsystem
         getController().setTolerance(Constants.GYRO_PID_TOLERANCE);   // Degree tolerance for set point
     }
     
-	// Primary action to get current gyro angle measure.  Defined as abstract and there
+	// Primary action to get current gyro angle measure. Defined as abstract and there
 	// mandated.  Automatically called periodically.
 	@Override
 	public double getMeasurement() 
@@ -33,7 +36,7 @@ public class GyroPID extends PIDSubsystem
     	return gyro.getAngle(); 
 	}
 
-	// Consumes output of PID controller using current set point.  Automatically called
+	// Consumes output of PID controller using current set point. Automatically called
 	// periodically.
 	@Override
 	public void useOutput(double output, double setpoint)

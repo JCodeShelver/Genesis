@@ -7,15 +7,18 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.Timer;
 
+// Import subsystems
 import frc.robot.subsystems.DriveSystem;
 
 public class Auton extends CommandBase
 {
+    // Set vars
     private final DriveSystem driveSystem;   // Reference to drive system object 
     private Timer driveTimer = new Timer();
 
     private double DRIVE_TIME = 2.0;    // Duration of action
 
+    // Constructor
     public Auton(DriveSystem d)
     {
         driveSystem = d;

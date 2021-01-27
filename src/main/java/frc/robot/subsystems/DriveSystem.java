@@ -1,25 +1,29 @@
 // BlitzCreek 3770 - Genesis Project
 // DriveSystem Subsystem
-// Controlls the drivetrain
+// Controls the drivetrain
 
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Counter;
 
+// External Library Imports
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.*;
 
+// Import Constants
 import frc.robot.Constants;
 
 public class DriveSystem extends SubsystemBase
 {
+  // Set vars
   private TalonSRX leftMotor1, leftMotor2;
   private TalonSRX rightMotor1, rightMotor2;
   private Counter leftEncoder, rightEncoder;
 
   private double adjustedLeft, adjustedRight;
   
+  // Constructor
   public DriveSystem()
   {
     leftMotor1  = new TalonSRX(Constants.LEFT_MOTOR1_CAN_ID);
@@ -30,14 +34,17 @@ public class DriveSystem extends SubsystemBase
     leftEncoder = new Counter(Constants.LT_ENCODER_CAN_ID);
     rightEncoder = new Counter(Constants.RT_ENCODER_CAN_ID);
 
+    // Set the left motors to be inverted, because the motors face opposite directions.
     leftMotor1.setInverted(true);
     leftMotor2.setInverted(true);
     rightMotor1.setInverted(false);
     rightMotor2.setInverted(false);
   }
 
+  // A quadratic function on the input lets small inputs be small, and large inputs be representative.
   public void quadDrive(double left, double right)
   {
+    // We still have to keep the direction of the input (-x^2 = x^2)
     if (left < 0)
       adjustedLeft = -left * left;
     else
@@ -54,6 +61,7 @@ public class DriveSystem extends SubsystemBase
     rightMotor2.set(ControlMode.PercentOutput, adjustedRight);
   }
 
+  // A kill function to stop every motor.
   public void kill()
   {
     leftMotor1.set(ControlMode.PercentOutput, 0);
@@ -62,6 +70,7 @@ public class DriveSystem extends SubsystemBase
     rightMotor2.set(ControlMode.PercentOutput, 0);
   }
 
+  // A function to reset the motor encoders.
   public void zeroEncoder()
   {
     leftEncoder.reset();
